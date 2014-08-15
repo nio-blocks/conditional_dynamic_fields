@@ -91,6 +91,45 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         self.assertEqual(self.last_notified[4].greeting,
                          "i am nothing :(")
 
+    def test_lookup_bad_syntax(self):
+        signals = [FlavorSignal("banana", "S"),
+                   FlavorSignal("banana", "M"),
+                   FlavorSignal("banana"),
+                   FlavorSignal("apple", "S"),
+                   FlavorSignal("coffee", "S")]
+        blk = ConditionalDynamicFields()
+        config = {
+            "fields": [{
+                "title": "greeting",
+                "lookup": [
+                    {"formula": "{{$flavor == {this is bad} }}",
+                     "value": "i am an apple!"},
+                    {"formula": "{{$flavor == 'banana' and " \
+                                "$size == 'S'}}",
+                     "value": "i am a banana!"},
+                    {"formula": "{{$flavor == 'apple'}}",
+                     "value": "i am an apple!"},
+                    {"formula": "{{$flavor == 'banana'}}",
+                     "value": "i am a banana again!"},
+                    {"formula": "{{True}}",
+                     "value": "i am nothing :("}
+                ]
+            }]
+        }
+        self.configure_block(blk, config)
+        blk.start()
+        blk.process_signals(signals)
+        self.assertEqual(self.last_notified[0].greeting,
+                         "i am a banana!")
+        self.assertEqual(self.last_notified[1].greeting,
+                         "i am a banana again!")
+        self.assertEqual(self.last_notified[2].greeting,
+                         "i am a banana again!")
+        self.assertEqual(self.last_notified[3].greeting,
+                         "i am an apple!")
+        self.assertEqual(self.last_notified[4].greeting,
+                         "i am nothing :(")
+
     def test_exclude(self):
         signals = [FlavorSignal("banana")]
         blk = ConditionalDynamicFields()
@@ -130,4 +169,3 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         sig = self.last_notified[0]
         self.assertTrue(hasattr(sig, 'greeting'))
         self.assertIsNone(sig.greeting)
-

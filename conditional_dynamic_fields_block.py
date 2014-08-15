@@ -55,10 +55,6 @@ class ConditionalDynamicFields(Block):
                     value = self._evaluate_lookup(field.lookup, signal)
                 except Exception as e:
                     value = None
-                    self._logger.error(
-                        "Dynamic field {0} evaluation failed: {0}: {1}".format(
-                            type(e).__name__, str(e))
-                    )
 
                 setattr(tmp, field.title, value)
 
@@ -73,6 +69,12 @@ class ConditionalDynamicFields(Block):
 
     def _evaluate_lookup(self, lookup, signal):
         for lu in lookup:
-            value = lu.formula(signal)
-            if value:
-                return lu.value(signal)
+            try:
+                value = lu.formula(signal)
+                if value:
+                    return lu.value(signal)
+            except Exception as e:
+                self._logger.error(
+                    "Dynamic field {0} evaluation failed: {0}: {1}".format(
+                        type(e).__name__, str(e))
+                )
