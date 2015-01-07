@@ -22,7 +22,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         super().setUp()
         self.last_notified = []
 
-    def signals_notified(self, signals):
+    def signals_notified(self, signals, output_id='default'):
         self.last_notified = signals
 
     def test_pass(self):
