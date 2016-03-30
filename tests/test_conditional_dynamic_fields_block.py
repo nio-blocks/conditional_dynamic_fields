@@ -1,7 +1,8 @@
 from unittest.mock import patch
+from nio.block.terminals import DEFAULT_TERMINAL
+from nio.signal.base import Signal
+from nio.testing.block_test_case import NIOBlockTestCase
 from ..conditional_dynamic_fields_block import ConditionalDynamicFields
-from nio.util.support.block_test_case import NIOBlockTestCase
-from nio.common.signal.base import Signal
 
 
 class FlavorSignal(Signal):
@@ -18,13 +19,6 @@ class KeyValueSignal(Signal):
 
 class TestConditionalDynamicFields(NIOBlockTestCase):
 
-    def setUp(self):
-        super().setUp()
-        self.last_notified = []
-
-    def signals_notified(self, signals, output_id='default'):
-        self.last_notified = signals
-
     def test_pass(self):
         signals = [FlavorSignal("banana")]
         attrs = signals[0].__dict__
@@ -32,7 +26,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         self.configure_block(blk, {})
         blk.start()
         blk.process_signals(signals)
-        self.assertDictEqual(attrs, self.last_notified[0].__dict__)
+        self.assertDictEqual(attrs, self.last_notified[DEFAULT_TERMINAL][0].__dict__)
 
     def test_add_field(self):
         signals = [FlavorSignal("banana")]
@@ -49,7 +43,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         self.configure_block(blk, config)
         blk.start()
         blk.process_signals(signals)
-        sig = self.last_notified[0]
+        sig = self.last_notified[DEFAULT_TERMINAL][0]
         self.assertTrue(hasattr(sig, 'greeting'))
         self.assertTrue(hasattr(sig, 'flavor'))
         self.assertEqual(sig.greeting, "i am a banana!")
@@ -80,15 +74,15 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         self.configure_block(blk, config)
         blk.start()
         blk.process_signals(signals)
-        self.assertEqual(self.last_notified[0].greeting,
+        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][0].greeting,
                          "i am a banana!")
-        self.assertEqual(self.last_notified[1].greeting,
+        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][1].greeting,
                          "i am a banana again!")
-        self.assertEqual(self.last_notified[2].greeting,
+        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][2].greeting,
                          "i am a banana again!")
-        self.assertEqual(self.last_notified[3].greeting,
+        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][3].greeting,
                          "i am an apple!")
-        self.assertEqual(self.last_notified[4].greeting,
+        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][4].greeting,
                          "i am nothing :(")
 
     def test_lookup_bad_syntax(self):
@@ -119,15 +113,15 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         self.configure_block(blk, config)
         blk.start()
         blk.process_signals(signals)
-        self.assertEqual(self.last_notified[0].greeting,
+        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][0].greeting,
                          "i am a banana!")
-        self.assertEqual(self.last_notified[1].greeting,
+        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][1].greeting,
                          "i am a banana again!")
-        self.assertEqual(self.last_notified[2].greeting,
+        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][2].greeting,
                          "i am a banana again!")
-        self.assertEqual(self.last_notified[3].greeting,
+        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][3].greeting,
                          "i am an apple!")
-        self.assertEqual(self.last_notified[4].greeting,
+        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][4].greeting,
                          "i am nothing :(")
 
     def test_exclude(self):
@@ -146,7 +140,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         self.configure_block(blk, config)
         blk.start()
         blk.process_signals(signals)
-        sig = self.last_notified[0]
+        sig = self.last_notified[DEFAULT_TERMINAL][0]
         self.assertTrue(hasattr(sig, 'greeting'))
         self.assertFalse(hasattr(sig, 'flavor'))
         self.assertEqual(sig.greeting, "i am a banana!")
@@ -166,6 +160,6 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         })
         blk.start()
         blk.process_signals(signals)
-        sig = self.last_notified[0]
+        sig = self.last_notified[DEFAULT_TERMINAL][0]
         self.assertTrue(hasattr(sig, 'greeting'))
         self.assertIsNone(sig.greeting)

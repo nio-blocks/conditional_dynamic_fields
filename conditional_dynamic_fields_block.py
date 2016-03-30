@@ -1,24 +1,24 @@
-from nio.common.block.base import Block
-from nio.common.signal.base import Signal
-from nio.common.discovery import Discoverable, DiscoverableType
-from nio.metadata.properties.list import ListProperty
-from nio.metadata.properties.expression import ExpressionProperty
-from nio.metadata.properties.string import StringProperty
-from nio.metadata.properties.holder import PropertyHolder
-from nio.metadata.properties.bool import BoolProperty
+from nio.block.base import Block
+from nio.signal.base import Signal
+from nio.util.discovery import discoverable
+from nio.properties.list import ListProperty
+from nio.properties import Property
+from nio.properties.string import StringProperty
+from nio.properties.holder import PropertyHolder
+from nio.properties.bool import BoolProperty
 
 
 class LookupProperty(PropertyHolder):
-    formula = ExpressionProperty(default='{{True}}', title='Formula')
-    value = ExpressionProperty(default='value', title='Value')
+    formula = Property(default='{{True}}', title='Formula')
+    value = Property(default='value', title='Value')
 
 
 class SignalField(PropertyHolder):
     title = StringProperty(default='', title="Attribute Title")
-    lookup = ListProperty(LookupProperty, title='Lookup')
+    lookup = ListProperty(LookupProperty, title='Lookup', default=[])
 
 
-@Discoverable(DiscoverableType.block)
+@discoverable
 class ConditionalDynamicFields(Block):
     """ Conditional Dynamic Fields block.
 
@@ -33,7 +33,7 @@ class ConditionalDynamicFields(Block):
 
     """
 
-    fields = ListProperty(SignalField, title='Fields')
+    fields = ListProperty(SignalField, title='Fields', default=[])
     exclude = BoolProperty(default=False, title='Exclude existing fields?')
 
     def process_signals(self, signals):
@@ -46,17 +46,17 @@ class ConditionalDynamicFields(Block):
 
             # if we are including only the specified fields, create
             # a new, empty signal object
-            tmp = Signal() if self.exclude else signal
+            tmp = Signal() if self.exclude() else signal
 
             # iterate over the specified fields, evaluating the formula
             # in the context of the original signal
-            for field in self.fields:
+            for field in self.fields():
                 try:
-                    value = self._evaluate_lookup(field.lookup, signal)
+                    value = self._evaluate_lookup(field.lookup(), signal)
                 except Exception as e:
                     value = None
 
-                setattr(tmp, field.title, value)
+                setattr(tmp, field.title(), value)
 
             # only rebuild the signal list if we're using new objects
             if self.exclude:
@@ -74,7 +74,7 @@ class ConditionalDynamicFields(Block):
                 if value:
                     return lu.value(signal)
             except Exception as e:
-                self._logger.error(
+                self.logger.error(
                     "Dynamic field {0} evaluation failed: {0}: {1}".format(
                         type(e).__name__, str(e))
                 )
