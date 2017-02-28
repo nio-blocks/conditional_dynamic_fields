@@ -51,13 +51,8 @@ class ConditionalDynamicFields(Block):
             # iterate over the specified fields, evaluating the formula
             # in the context of the original signal
             for field in self.fields():
-                try:
-                    value = self._evaluate_lookup(field.lookup(), signal)
-                except Exception as e:
-                    value = None
-
+                value = self._evaluate_lookup(field.lookup(), signal)
                 setattr(tmp, field.title(), value)
-
             # only rebuild the signal list if we're using new objects
             if self.exclude:
                 fresh_signals.append(tmp)
@@ -69,12 +64,6 @@ class ConditionalDynamicFields(Block):
 
     def _evaluate_lookup(self, lookup, signal):
         for lu in lookup:
-            try:
-                value = lu.formula(signal)
-                if value:
-                    return lu.value(signal)
-            except Exception as e:
-                self.logger.error(
-                    "Dynamic field {0} evaluation failed: {0}: {1}".format(
-                        type(e).__name__, str(e))
-                )
+            value = lu.formula(signal)
+            if value:
+                return lu.value(signal)
