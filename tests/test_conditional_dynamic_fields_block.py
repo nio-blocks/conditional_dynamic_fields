@@ -1,4 +1,3 @@
-from unittest.mock import patch
 from nio.block.terminals import DEFAULT_TERMINAL
 from nio.signal.base import Signal
 from nio.testing.block_test_case import NIOBlockTestCase
@@ -7,12 +6,14 @@ from ..conditional_dynamic_fields_block import ConditionalDynamicFields
 
 class FlavorSignal(Signal):
     def __init__(self, flavor, size=None):
+        super().__init__()
         self.flavor = flavor
         self.size = size
 
 
 class KeyValueSignal(Signal):
     def __init__(self, key, value):
+        super().__init__()
         self.key = key
         self.value = value
 
@@ -26,7 +27,8 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         self.configure_block(blk, {})
         blk.start()
         blk.process_signals(signals)
-        self.assertDictEqual(attrs, self.last_notified[DEFAULT_TERMINAL][0].__dict__)
+        self.assertDictEqual(attrs,
+                             self.last_notified[DEFAULT_TERMINAL][0].__dict__)
 
     def test_add_field(self):
         signals = [FlavorSignal("banana")]
@@ -112,17 +114,10 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
         }
         self.configure_block(blk, config)
         blk.start()
-        blk.process_signals(signals)
-        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][0].greeting,
-                         "i am a banana!")
-        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][1].greeting,
-                         "i am a banana again!")
-        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][2].greeting,
-                         "i am a banana again!")
-        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][3].greeting,
-                         "i am an apple!")
-        self.assertEqual(self.last_notified[DEFAULT_TERMINAL][4].greeting,
-                         "i am nothing :(")
+        with self.assertRaises(NameError):
+            blk.process_signals(signals)
+        # do not catch exception and do not notify signal
+        self.assertEqual(len(self.last_notified[DEFAULT_TERMINAL]), 0)
 
     def test_exclude(self):
         signals = [FlavorSignal("banana")]
@@ -159,7 +154,8 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
             }]
         })
         blk.start()
-        blk.process_signals(signals)
-        sig = self.last_notified[DEFAULT_TERMINAL][0]
-        self.assertTrue(hasattr(sig, 'greeting'))
-        self.assertIsNone(sig.greeting)
+        # field "val" doesn't exist on the incoming signal
+        with self.assertRaises(AttributeError):
+            blk.process_signals(signals)
+        # do not catch exception and do not notify signal
+        self.assertEqual(len(self.last_notified[DEFAULT_TERMINAL]), 0)
