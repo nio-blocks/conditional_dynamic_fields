@@ -1,22 +1,10 @@
 {
-    "nio/ConditionalDynamicFields": {
-        "Properties": {
-            "fields": {
-                "description": "List of attribute names and corresponding values to add to the incoming signals."
-            },
-            "exclude": {
-                "description": "If `True`, output signals only contain the attributes specified by `fields`."
-            }
-        },
-        "Input": {
-            "Description": "Any list of signals."
-        },
-        "Version": "1.0.0",
-        "Commands": {},
-        "Description": "Adds a new field, `title`, to input signals. The value of the attribute is determined by the **lookup** parameter. **lookup** is a list of formula/value pairs. In order, the *formula* of **lookup** are evaluated and when an evaluation is `True`, the *value* is assigned to the signal attribute `title`. If multiple formulas match, the first value is the one that is assigned to the signal.",
-        "Category": "SignalModifier",
-        "Output": {
-            "Description": "One signal for every incoming signal, modified according to `fields` and `exclude`."
-        }
-    }
+  "nio/ConditionalDynamicFields": {
+    "version": "0.0.1",
+    "description": "",
+    "inputs": {},
+    "outputs": {},
+    "properties": {},
+    "commands": {}
+  }
 }
