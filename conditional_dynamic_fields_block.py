@@ -1,11 +1,7 @@
 from nio.block.base import Block
 from nio.signal.base import Signal
-from nio.util.discovery import discoverable
-from nio.properties.list import ListProperty
-from nio.properties import Property
-from nio.properties.string import StringProperty
-from nio.properties.holder import PropertyHolder
-from nio.properties.bool import BoolProperty
+from nio.properties import (StringProperty, PropertyHolder, BoolProperty,
+                            Property, ListProperty, VersionProperty)
 
 
 class LookupProperty(PropertyHolder):
@@ -18,7 +14,6 @@ class SignalField(PropertyHolder):
     lookup = ListProperty(LookupProperty, title='Lookup', default=[])
 
 
-@discoverable
 class ConditionalDynamicFields(Block):
     """ Conditional Dynamic Fields block.
 
@@ -35,11 +30,9 @@ class ConditionalDynamicFields(Block):
 
     fields = ListProperty(SignalField, title='Fields', default=[])
     exclude = BoolProperty(default=False, title='Exclude existing fields?')
+    version = VersionProperty("1.0.0")
 
     def process_signals(self, signals):
-        """ Overridden from the block interface.
-
-        """
         fresh_signals = []
 
         for signal in signals:

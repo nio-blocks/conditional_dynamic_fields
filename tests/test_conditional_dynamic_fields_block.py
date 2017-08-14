@@ -61,7 +61,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
             "fields": [{
                 "title": "greeting",
                 "lookup": [
-                    {"formula": "{{$flavor == 'banana' and " \
+                    {"formula": "{{$flavor == 'banana' and "
                                 "$size == 'S'}}",
                      "value": "i am a banana!"},
                     {"formula": "{{$flavor == 'apple'}}",
@@ -100,7 +100,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
                 "lookup": [
                     {"formula": "{{$flavor == {this is bad} }}",
                      "value": "i am an apple!"},
-                    {"formula": "{{$flavor == 'banana' and " \
+                    {"formula": "{{$flavor == 'banana' and "
                                 "$size == 'S'}}",
                      "value": "i am a banana!"},
                     {"formula": "{{$flavor == 'apple'}}",
