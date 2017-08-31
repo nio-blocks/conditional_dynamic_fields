@@ -14,8 +14,8 @@ class SignalField(PropertyHolder):
     lookup = ListProperty(LookupProperty, title='Lookup', default=[])
 
 
-class ConditionalDynamicFields(Block):
-    """ Conditional Dynamic Fields block.
+class ConditionalModifier(Block):
+    """ Conditional Modifier block.
 
     Adds a new new field, *title*, to input signals. The
     value of the attribute is determined by the *lookup*
