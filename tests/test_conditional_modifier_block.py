@@ -1,8 +1,7 @@
 from nio.block.terminals import DEFAULT_TERMINAL
 from nio.signal.base import Signal
 from nio.testing.block_test_case import NIOBlockTestCase
-from ..conditional_dynamic_fields_block_deprecated import \
-    ConditionalDynamicFields
+from ..conditional_modifier_block import ConditionalModifier
 
 
 class FlavorSignal(Signal):
@@ -19,12 +18,12 @@ class KeyValueSignal(Signal):
         self.value = value
 
 
-class TestConditionalDynamicFields(NIOBlockTestCase):
+class TestConditionalModifier(NIOBlockTestCase):
 
     def test_pass(self):
         signals = [FlavorSignal("banana")]
         attrs = signals[0].__dict__
-        blk = ConditionalDynamicFields()
+        blk = ConditionalModifier()
         self.configure_block(blk, {})
         blk.start()
         blk.process_signals(signals)
@@ -33,7 +32,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
 
     def test_add_field(self):
         signals = [FlavorSignal("banana")]
-        blk = ConditionalDynamicFields()
+        blk = ConditionalModifier()
         config = {
             "fields": [{
                 "title": "greeting",
@@ -57,7 +56,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
                    FlavorSignal("banana"),
                    FlavorSignal("apple", "S"),
                    FlavorSignal("coffee", "S")]
-        blk = ConditionalDynamicFields()
+        blk = ConditionalModifier()
         config = {
             "fields": [{
                 "title": "greeting",
@@ -94,7 +93,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
                    FlavorSignal("banana"),
                    FlavorSignal("apple", "S"),
                    FlavorSignal("coffee", "S")]
-        blk = ConditionalDynamicFields()
+        blk = ConditionalModifier()
         config = {
             "fields": [{
                 "title": "greeting",
@@ -122,7 +121,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
 
     def test_exclude(self):
         signals = [FlavorSignal("banana")]
-        blk = ConditionalDynamicFields()
+        blk = ConditionalModifier()
         config = {
             "exclude": True,
             "fields": [{
@@ -143,7 +142,7 @@ class TestConditionalDynamicFields(NIOBlockTestCase):
 
     def test_bogus_field(self):
         signals = [FlavorSignal("you won't see me")]
-        blk = ConditionalDynamicFields()
+        blk = ConditionalModifier()
         self.configure_block(blk, {
             "exclude": True,
             "fields": [{
