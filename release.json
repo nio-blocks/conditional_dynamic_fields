@@ -1,9 +1,4 @@
 {
-  "nio/ConditionalDynamicFields": {
-    "language": "Python",
-    "url": "git://github.com/nio-blocks/conditional_dynamic_fields.git",
-    "version": "1.0.0"
-  },
   "nio/ConditionalModifier": {
     "language": "Python",
     "url": "git://github.com/nio-blocks/conditional_modifier.git",
