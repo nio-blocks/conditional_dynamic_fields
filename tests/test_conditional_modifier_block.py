@@ -166,7 +166,7 @@ class TestConditionalModifier(NIOBlockTestCase):
         self.configure_block(blk, {
             "exclude": True,
             "fields": [{
-                "title": "foobar",
+                "title": "{{ None }}",
                 "lookup": [{
                     "formula": "{{ True }}",
                     "value": "{{ None }}"
