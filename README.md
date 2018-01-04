@@ -1,11 +1,11 @@
 ConditionalModifier
 ===================
-Adds a new new field, *title*, to input signals. The value of the attribute is determined by the *lookup* parameter. *lookup* is a list of formula/value pairs. In order, the *formula* of *lookup* are evaluated and when an evaluation is *True*, the *value* is assigned to the signal attribute *title*. If multiple formulas match, the first value is the one that is assigned to the signal.
+The ConditionalModifier block adds a new attribute to input signals, labeled by the *title* attribute. The value of the attribute is determined by the *lookup* parameter. If the expression inside *lookup* evaluates to True, the *value* parameter is assigned to the *title* attribute. *lookup*s are evaluated top to bottom, and if multiple formulas in the same field evaluate to True, the first value is the one that is assigned to the signal.
 
 Properties
 ----------
-- **exclude**: Whether to exclude existing fields on incoming signals when creating an output signal.
-- **fields**: Fields to add onto the incoming signal.
+- **exclude**: If checked (true), the attributes of the incoming signal will be excluded from the outgoing signal. If unchecked (false), the attributes of the incoming signal will be included in the outgoing signal.
+- **fields**: Fields and values to add onto the incoming signal based on the lookup expression.
 
 Inputs
 ------
@@ -13,7 +13,7 @@ Inputs
 
 Outputs
 -------
-- **default**: One signal for every incoming signal, modified according to 'fields' and 'exclude'.
+- **default**: One signal for every incoming signal, modified according to 'fields'.
 
 Commands
 --------
