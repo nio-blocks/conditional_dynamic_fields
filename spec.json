@@ -1,7 +1,7 @@
 {
   "nio/ConditionalModifier": {
     "version": "1.0.0",
-    "description": "Adds a new new field, *title*, to input signals. The value of the attribute is determined by the *lookup* parameter. *lookup* is a list of formula/value pairs. In order, the *formula* of *lookup* are evaluated and when an evaluation is *True*, the *value* is assigned to the signal attribute *title*. If multiple formulas match, the first value is the one that is assigned to the signal.",
+    "description": "Just like the [Modifier](https://blocks.n.io/Modifier) block, the ConditionalModifier block adds new attributes to a signal. But with the ConditionalModifier, the value of each new attribute is conditional, based on the evaluation of one or more **lookup** expressions. If the expression inside a **lookup** evaluates to `True`, the **value** parameter is assigned to the **title** attribute. **lookup** expressions are evaluated top to bottom, and if multiple formulas in the same field evaluate to `True`, the first value is the one that is assigned to the new **title** attribute on the signal.",
     "categories": [
       "Signal Modifier"
     ],
@@ -9,13 +9,13 @@
       "exclude": {
         "title": "Exclude existing fields?",
         "type": "BoolType",
-        "description": "Whether to exclude existing fields on incoming signals when creating an output signal.",
+        "description": "If checked (true), the attributes of the incoming signal will be excluded from the outgoing signal. If unchecked (false), the attributes of the incoming signal will be included in the outgoing signal.",
         "default": false
       },
       "fields": {
         "title": "Fields",
         "type": "ListType",
-        "description": "Fields to add onto the incoming signal.",
+        "description": "Fields and values to add to the incoming signal based on the **lookup** expression.",
         "default": []
       }
     },
@@ -26,7 +26,7 @@
     },
     "outputs": {
       "default": {
-        "description": "One signal for every incoming signal, modified according to 'fields' and 'exclude'."
+        "description": "One signal for every incoming signal, modified according to 'fields'."
       }
     },
     "commands": {}
