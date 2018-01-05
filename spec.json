@@ -1,7 +1,7 @@
 {
   "nio/ConditionalModifier": {
     "version": "1.0.0",
-    "description": "Just like the [Modifier](https://blocks.n.io/Modifier) block, the ConditionalModifier block adds new attributes to a signal. But with the ConditionalModifier, the value of each new attribute is conditional, based on the evaluation of one or more **lookup** expressions. If the expression inside a **lookup** evaluates to `True`, the **value** parameter is assigned to the **title** attribute. **lookup**s are evaluated top to bottom, and if multiple formulas in the same field evaluate to `True`, the first value is the one that is assigned to the new **title** attribute on the signal.",
+    "description": "Just like the [Modifier](https://blocks.n.io/Modifier) block, the ConditionalModifier block adds new attributes to a signal. But with the ConditionalModifier, the value of each new attribute is conditional, based on the evaluation of one or more **lookup** expressions. If the expression inside a **lookup** evaluates to `True`, the **value** parameter is assigned to the **title** attribute. **lookup** expressions are evaluated top to bottom, and if multiple formulas in the same field evaluate to `True`, the first value is the one that is assigned to the new **title** attribute on the signal.",
     "categories": [
       "Signal Modifier"
     ],
