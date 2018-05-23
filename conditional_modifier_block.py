@@ -29,7 +29,7 @@ class ConditionalModifier(Block):
     """
 
     fields = ListProperty(SignalField, title='Attribute', default=[])
-    exclude = BoolProperty(default=False, title='Exclude existing attributes?')
+    exclude = BoolProperty(default=False, title='Exclude incoming attributes?')
     version = VersionProperty("1.0.1")
 
     def process_signals(self, signals):
