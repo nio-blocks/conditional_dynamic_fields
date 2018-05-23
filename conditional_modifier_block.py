@@ -10,7 +10,7 @@ class LookupProperty(PropertyHolder):
 
 
 class SignalField(PropertyHolder):
-    title = StringProperty(default='', title="Attribute Title")
+    title = StringProperty(default='', title='Key')
     lookup = ListProperty(LookupProperty, title='Lookup', default=[])
 
 
@@ -28,8 +28,8 @@ class ConditionalModifier(Block):
 
     """
 
-    fields = ListProperty(SignalField, title='Fields', default=[])
-    exclude = BoolProperty(default=False, title='Exclude existing fields?')
+    fields = ListProperty(SignalField, title='Attribute', default=[])
+    exclude = BoolProperty(default=False, title='Exclude existing attributes?')
     version = VersionProperty("1.0.1")
 
     def process_signals(self, signals):
