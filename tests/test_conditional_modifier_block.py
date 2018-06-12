@@ -159,3 +159,20 @@ class TestConditionalModifier(NIOBlockTestCase):
             blk.process_signals(signals)
         # do not catch exception and do not notify signal
         self.assertEqual(len(self.last_notified[DEFAULT_TERMINAL]), 0)
+
+    def test_none_value(self):
+        signals = [FlavorSignal("arbitrary")]
+        blk = ConditionalModifier()
+        self.configure_block(blk, {
+            "exclude": True,
+            "fields": [{
+                "title": "foobar",
+                "lookup": [{
+                    "formula": "{{ True }}",
+                    "value": "{{ None }}"
+                }]
+            }]
+        })
+        blk.start()
+        blk.process_signals(signals)
+        self.assertEqual(len(self.last_notified[DEFAULT_TERMINAL]), 1)

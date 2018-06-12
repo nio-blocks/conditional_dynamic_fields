@@ -6,7 +6,7 @@ from nio.properties import (StringProperty, PropertyHolder, BoolProperty,
 
 class LookupProperty(PropertyHolder):
     formula = Property(default='{{True}}', title='Formula')
-    value = Property(default='value', title='Value')
+    value = Property(default='value', title='Value', allow_none=True)
 
 
 class SignalField(PropertyHolder):
