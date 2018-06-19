@@ -5,13 +5,13 @@ from nio.properties import (StringProperty, PropertyHolder, BoolProperty,
 
 
 class LookupProperty(PropertyHolder):
-    formula = Property(default='{{True}}', title='Formula')
-    value = Property(default='value', title='Value', allow_none=True)
+    formula = Property(default='{{True}}', title='Formula', order=0)
+    value = Property(default='value', title='Attribute Value', allow_none=True, order=1)
 
 
 class SignalField(PropertyHolder):
-    title = StringProperty(default='', title="Attribute Title")
-    lookup = ListProperty(LookupProperty, title='Lookup', default=[])
+    title = StringProperty(default='', title="Attribute Name", order=0)
+    lookup = ListProperty(LookupProperty, title='Lookup', default=[], order=1)
 
 
 class ConditionalModifier(Block):
@@ -28,7 +28,7 @@ class ConditionalModifier(Block):
 
     """
 
-    fields = ListProperty(SignalField, title='Fields', default=[])
+    fields = ListProperty(SignalField, title='Fields', default=[], order=0)
     exclude = BoolProperty(default=False, title='Exclude existing fields?')
     version = VersionProperty("1.0.1")
 
