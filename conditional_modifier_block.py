@@ -30,7 +30,7 @@ class ConditionalModifier(Block):
 
     fields = ListProperty(SignalField, title='Fields', default=[], order=0)
     exclude = BoolProperty(default=False, title='Exclude existing fields?')
-    version = VersionProperty("1.0.1")
+    version = VersionProperty("1.1.0")
 
     def process_signals(self, signals):
         fresh_signals = []
