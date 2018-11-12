@@ -37,26 +37,16 @@ Fields:
 <td>
 <pre>
 [
-  {
-    "unit": 1,
-    "temp_C": 2.2
-  },
-  {
-    "unit": 2,
-    "temp_C": -1.0
-  }
+  {"unit": 1, "temp_C": 2.2},
+  {"unit": 2, "temp_C": -1.0}
 ]
 </pre>
 </td>
 <td>
 <pre>
 [
-  {
-    "message": "Critical temperature in Freezer 1! Current temp: 2.2C"
-  },
-  {
-    "message": "Freezer 2 OK: -1.0C"
-  }
+  {"message": "Critical temperature in Freezer 1! Current temp: 2.2C"},
+  {"message": "Freezer 2 OK: -1.0C"}
 ]
 </pre>
 </td>
