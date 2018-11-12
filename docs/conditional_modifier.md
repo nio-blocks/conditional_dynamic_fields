@@ -15,18 +15,18 @@ Examples
 --------
 The conditional modifier is especially useful when defining the contents of a message. In this example, if the first two lookups do not evaluate as `True`, the final lookup will and therefore act as an `else` statement.:
 ```
-Exclude Existing Fields: True,
+Exclude Existing Fields: True
 Fields:
-  Title: "message",
+  Title: message
   Lookup:
-    Formula: "{{ $temp_C > 4 }}",
-    Value: "Perishables in Freezer {{ $unit }} have spoiled! Current temp: {{ $temp_C }}C"
+    Formula: {{ $temp_C > 4 }}
+    Value: Perishables in Freezer {{ $unit }} have spoiled! Current temp: {{ $temp_C }}C
     
-    Formula: "{{ $temp_C >= 0 }}",
-    Value: "Critical temperature in Freezer {{ $unit }}! Current temp: {{ $temp_C }}C"
+    Formula: {{ $temp_C >= 0 }}
+    Value: Critical temperature in Freezer {{ $unit }}! Current temp: {{ $temp_C }}C
     
-    Formula: "{{ True }}",
-    Value: "Freezer {{ $unit }} OK: {{ $temp_C }}C"
+    Formula: {{ True }}
+    Value: Freezer {{ $unit }} OK: {{ $temp_C }}C
 ```
 <table width=100%>
 <tr>
