@@ -4,12 +4,12 @@ Just like the [Modifier](https://blocks.n.io/Modifier) block, the ConditionalMod
 
 Properties
 ----------
-- **Excude Existing Fields**: If checked (True) incoming signals will be discarded, and new signals created with only the fields specified. If False, the incoming signals will have the specified fields added to them, or updated if present.
 - **Fields**: List of attributes to add to the incoming signals.
   - *Title*: The key of this attribute.
   - *Lookup*: List of conditions to evaluate.
     - *Formula*: An expression to be evaluated as `True` or `False`.
     - *Value*: The value to assign to this attribute if the evaluation of **Formula** is `True`.
+- **Exclude Existing Fields**: If checked (True) incoming signals will be discarded, and new signals created with only the fields specified. If False, the incoming signals will have the specified fields added to them, or updated if present.
 
 Examples
 --------
