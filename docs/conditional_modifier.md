@@ -44,7 +44,7 @@ Fields:
   {
     "unit": 2,
     "temp_C": -1.0
-  },
+  }
 ]
 </pre>
 </td>
@@ -56,7 +56,7 @@ Fields:
   },
   {
     "message": "Freezer 2 OK: -1.0C"
-  },
+  }
 ]
 </pre>
 </td>
